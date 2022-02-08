@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "title": "new",
+      "artist": "jack",
+      "year": "2020",
+      "price": "20$"
+    },
+    {
+      "id": 2,
+      "title": "kola",
+      "artist": "jack",
+      "year": "2020",
+      "price": "20$"
+    }
+  ]
+}
