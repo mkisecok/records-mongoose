@@ -25,9 +25,26 @@ app.use('/orders', orders);
 app.use('*', error);
 
 
-
 app.listen(port, () => 
 {
     console.log(`Server running in port:${port} `);
 });
 
+
+
+
+// app.get('*', (req,res,next) =>{
+//     let myError= new Error ('This path does not exist');
+//     myError.statusCode=404;
+//     next(myError);
+// });
+// app.use((error,req,res,next)=>
+// {
+//     console.log('Fehler middleware', error);
+//     res.status(error.statusCode)
+
+//     res.send({error:{
+//         status:error.statusCode,
+//         message: error.message
+//     }})
+// })

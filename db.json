@@ -34,6 +34,20 @@
       "artist": "test3",
       "year": "2020",
       "price": "20$"
+    },
+    {
+      "id": 6,
+      "title": "nesnew",
+      "artist": "test3",
+      "year": "2020",
+      "price": "20$"
+    },
+    {
+      "id": 7,
+      "title": "tell",
+      "artist": "test3",
+      "year": "2020",
+      "price": "20$"
     }
   ],
   "users": [
@@ -56,6 +70,11 @@
     {
       "listId": 1,
       "productId": "12ASD45",
+      "quantity": "5"
+    },
+    {
+      "listId": 2,
+      "productId": "12gjhjghjghjg",
       "quantity": "5"
     }
   ]
