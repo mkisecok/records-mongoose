@@ -27,6 +27,36 @@
       "artist": "test2",
       "year": "2020",
       "price": "20$"
+    },
+    {
+      "id": 5,
+      "title": "nesnew",
+      "artist": "test3",
+      "year": "2020",
+      "price": "20$"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "firstName": "mahmut",
+      "lastName": "kisecok",
+      "email": "mahmut@gmail.com",
+      "password": "123456789"
+    },
+    {
+      "id": 2,
+      "firstName": "hasan",
+      "lastName": "yildiz",
+      "email": "hasan@gmail.com",
+      "password": "123456789"
+    }
+  ],
+  "orders": [
+    {
+      "listId": 1,
+      "productId": "12ASD45",
+      "quantity": "5"
     }
   ]
 }

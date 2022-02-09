@@ -1,73 +1,33 @@
 const express = require('express');
+const bodyParser=require('body-parser');
+const { middlewareSecurity }=require('../middlewares/middlewareSecurity');
 
-const low=require('lowdb');
-const FileSync=require('lowdb/adapters/FileSync');
-const adapter=new FileSync('db.json');
-const db=low(adapter);
+// import routes
+const records = require('./../routes/records');
+const users =require('./../routes/users');
+const orders= require('./../routes/orders');
+const error =require('./../routes/error')
 
 const app=express();
-
-const bodyParser=require('body-parser');
-app.use(bodyParser.urlencoded( { extended:true }) );
-app.use(bodyParser.json());
-
 const port=3000;
 
-// cors as middleware 
- const { middlewareSecurity }=require('../middlewares/middlewareSecurity');
- app.use(middlewareSecurity());
-
-db.defaults({ records:[] }).write();
-
+app.use(bodyParser.urlencoded( { extended:true }) );
+app.use(bodyParser.json());
 app.use(express.json());
 
-app.route('/records')
-.get((req,res) => 
-{
-    const allRecords=db.get('records');
-    res.status(200).json(allRecords);
-})
-.post((req,res) => 
-{
-    let id=db.get('records').value().length+1;
+// middleware func as cors
+app.use(middlewareSecurity());
 
-    const { title, artist, year, price } = req.body;
-
-    db.get('records').push({ id, title, artist, year, price }).write();
-
-    res.status(200).json(`New record ${title} added ! `);
-})
-
-// app.get('/records', (req, res) =>
-// {
-    
-//     const allRecords=db.get('records');
-//     res.status(200).json(allRecords);
-// });
+//routers
+app.use('/records', records);
+app.use('/users', users);
+app.use('/orders', orders);
+app.use('*', error);
 
 
-
-// app.post('/records', (req, res) => 
-// {   
-//     let id=db.get('records').value().length+1;
-//     const
-//         {
-//             title,
-//             artist,
-//             year,
-//             price
-//         }=req.body;
-//     db.get('records').push({
-//         id,
-//         title,
-//         artist,
-//         year,
-//         price
-//     }).write();
-//     res.status(200).json(`New record ${title} added ! `);
-// });
 
 app.listen(port, () => 
 {
     console.log(`Server running in port:${port} `);
 });
+
