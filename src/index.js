@@ -19,34 +19,53 @@ const port=3000;
 
 db.defaults({ records:[] }).write();
 
-app.get('/api/records', (req, res) =>
-{
-    
-    const allRecords=db.get('records');
-    res.status(200).json(allRecords);
-});
-
 app.use(express.json());
 
-app.post('/api/records', (req, res) => 
-{   
+app.route('/records')
+.get((req,res) => 
+{
+    const allRecords=db.get('records');
+    res.status(200).json(allRecords);
+})
+.post((req,res) => 
+{
     let id=db.get('records').value().length+1;
-    const
-        {
-            title,
-            artist,
-            year,
-            price
-        }=req.body;
-    db.get('records').push({
-        id,
-        title,
-        artist,
-        year,
-        price
-    }).write();
+
+    const { title, artist, year, price } = req.body;
+
+    db.get('records').push({ id, title, artist, year, price }).write();
+
     res.status(200).json(`New record ${title} added ! `);
-});
+})
+
+// app.get('/records', (req, res) =>
+// {
+    
+//     const allRecords=db.get('records');
+//     res.status(200).json(allRecords);
+// });
+
+
+
+// app.post('/records', (req, res) => 
+// {   
+//     let id=db.get('records').value().length+1;
+//     const
+//         {
+//             title,
+//             artist,
+//             year,
+//             price
+//         }=req.body;
+//     db.get('records').push({
+//         id,
+//         title,
+//         artist,
+//         year,
+//         price
+//     }).write();
+//     res.status(200).json(`New record ${title} added ! `);
+// });
 
 app.listen(port, () => 
 {
