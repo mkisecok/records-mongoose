@@ -1,6 +1,6 @@
-exports.middlewareSecurity=()=>
+exports.middlewareSecurity=() =>
 {
-    return(req,res,next)=>
+    return(req, res, next) =>
     {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -8,5 +8,5 @@ exports.middlewareSecurity=()=>
         console.log('cors function ist accessible');
         
         next();
-    }
+    };
 };

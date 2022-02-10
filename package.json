@@ -1,7 +1,12 @@
 {
   "name": "ba-record2-mkisecok",
   "version": "1.0.0",
-  "nodemonConfig":{"ignore":["db/*","db.json"]},
+  "nodemonConfig": {
+    "ignore": [
+      "db/*",
+      "db.json"
+    ]
+  },
   "description": "Middleware-Funktionen, sind Funktionen die Zugriff auf das Anfrageobjekt (request, kurz `req`), das Antwortobjekt (response, kurz `res`) und die folgende Middleware-Funktion (`next`) im Anfrage/Antwort-Zyklus erhalten. Dadurch können sie z.B. die ankommende Anfrage verarbeiten oder verändern, oder die erstellte Antwort (etwa deren Header) verändern.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +28,9 @@
   "dependencies": {
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
+    "eslintrc": "^1.0.6",
     "express": "^4.17.2",
+    "express-basic-auth": "^1.2.1",
     "lowdb": "^1.0.0"
   }
 }
