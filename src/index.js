@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser=require('body-parser');
 const { middlewareSecurity }=require('../middlewares/middlewareSecurity');
-
+const morgan = require('morgan');
 // import routes
 const records = require('./../routes/records');
 const users =require('./../routes/users');
@@ -17,6 +17,18 @@ app.use(express.json());
 
 // middleware func as cors
 app.use(middlewareSecurity());
+
+morgan(function (tokens, req, res) 
+{
+    return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'), '-',
+        tokens [ 'response-time' ](req, res), 'ms'
+    ].join(' ');
+});
+app.use(morgan('tiny'));
 
 //  routers
 app.use('/records', records);
