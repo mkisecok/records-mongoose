@@ -48,6 +48,9 @@
       "artist": "test3",
       "year": "2020",
       "price": "20$"
+    },
+    {
+      "id": 8
     }
   ],
   "users": [
