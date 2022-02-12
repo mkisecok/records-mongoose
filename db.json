@@ -82,6 +82,16 @@
       "listId": 2,
       "productId": "12gjhjghjghjg",
       "quantity": "5"
+    },
+    {
+      "listId": 3,
+      "productId": "12121211",
+      "quantity": "2"
+    },
+    {
+      "listId": 4,
+      "productId": "12121211",
+      "quantity": "2"
     }
   ]
 }
