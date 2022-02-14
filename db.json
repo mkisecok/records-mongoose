@@ -77,6 +77,13 @@
       "lastName": "yildiz",
       "email": "hasan@gmail.com",
       "password": "123456789"
+    },
+    {
+      "id": 3,
+      "firstName": "ahmad",
+      "lastName": "haled",
+      "email": "ahmad@gmail.com",
+      "password": "111111111"
     }
   ],
   "orders": [

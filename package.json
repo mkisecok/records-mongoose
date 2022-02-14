@@ -28,6 +28,7 @@
   "dependencies": {
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "eslintrc": "^1.0.6",
     "express": "^4.17.2",
     "express-basic-auth": "^1.2.1",

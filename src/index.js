@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser=require('body-parser');
 const { middlewareSecurity }=require('./middlewares/middlewareSecurity');
@@ -9,7 +11,7 @@ const users =require('./routes/users');
 const orders= require('./routes/orders');
 
 const app=express();
-const port=3000;
+const port=process.env.PORT;
 
 app.use(bodyParser.urlencoded( { extended:true }) );
 app.use(bodyParser.json());
@@ -25,6 +27,7 @@ app.use('/records', records);
 app.use('/users', users);
 app.use('/orders', orders);
 
+// Error middleware
 app.use('*', (req, res, next ) =>
 {
     let myError = new Error('This path does not exist');
