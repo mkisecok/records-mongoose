@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const records = require('./routes/records');
 const users =require('./routes/users');
 const orders= require('./routes/orders');
-const error =require('./routes/error');
 
 const app=express();
 const port=3000;

@@ -1,6 +1,7 @@
 const express=require('express');
 
 const router =express.Router();
+const  getController =require('../controller/getController');
 
 //  lowdb
 const low=require('lowdb');
@@ -27,12 +28,7 @@ router.route('/')
     });
 
 router.route('/:id')
-    .get((req, res) => 
-    {
-        const { id } = req.params;
-
-        res.status(200).send('Get an Order with ProductId ' + id );
-    })
+    .get(getController)
     .put((req, res) => 
     {
         const { id } = req.params;
