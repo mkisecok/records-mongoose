@@ -1,52 +1,124 @@
 
-//  lowdb
-const low=require('lowdb');
-const FileSync=require('lowdb/adapters/FileSync');
-const adapter=new FileSync('db.json');
-const db=low(adapter);
 const path = require('path');
-db.defaults({ orders:[] }).write();
+
+// model
+const Order = require('../models/Order');
+
+// chance
+const Chance = require('chance');
+const chance = new Chance();
 
 const getController= ((req, res) => 
 {   
-    // const allOrders=db.get('orders');
-    // res.status(200).json(allOrders);
-    res.status(200).sendFile(path.join(__dirname, '../../public/index.html'));
+    Order.find({})
+        .then((orders) => 
+        {
+            res.status(200).sendFile(path.join(__dirname, '../../public/index.html'));
+        })
+        .catch(err => 
+        {
+            res.status(400).json({
+                success:false,
+                message: err.message
+            });
+        });      
 
 });
 
 const postController = ((req, res) =>
 {
-    let listId=db.get('orders').value().length+1;
-    const { productId, quantity } = req.body;
-    console.log(productId, quantity);
+    newOrder = new Order();
 
-    db.get('orders').push(
-        { listId, productId, quantity }).write();
-    res.status(200).json({ success:true });
+    newOrder.productId = req.body.productId || chance.hash({ length: 6 });
+    newOrder.quantity = req.body.quantity || chance.integer({ min: 1, max: 100 });
+
+    newOrder.save(( err, order ) => 
+    {
+        if(err) throw err;
+        res.json(order);
+    });
+        
 });
 
 const getParamController = ( (req, res) => 
 {
     const { id } = req.params;
 
-    res.status(200).send('Get an Order with ProductId ' + id );
+    Order.find({ _id: id } )
+        .then(order => 
+        {
+            res.status(200).json({
+                success:true,
+                data:order
+            });
+        })
+        .catch(err => 
+        {
+            res.status(400).json({
+                success:false,
+                message:err.message
+            });
+        });
 });
 
-const postParamController = ( (req, res) => 
+const putParamController = ( (req, res) => 
 {
     const { id } = req.params;
 
-    res.status(200).send('Update an Order with ProductId ' + id);
+    Order.findOne({ _id: id })
+        .then((order) => 
+        {
+            order.quantity = req.body.quantity || order.quantity;
+            order.productId =req.body.productId || order.productId;
+
+            order.save()
+                .then((updatedOrder) => 
+                {
+                    res.status(200).json({
+                        success:true,
+                        newData: req.body,
+                        data:updatedOrder
+                    });
+                })
+                .catch(err => 
+                {
+                    res.status(400).json({
+                        success:false,
+                        message:err.message
+                    });
+                });
+        })
+        .catch(err => 
+        {
+            res.status(400).json({
+                success:false,
+                message:err.message
+            });
+        });
+    
 });
 
 const deleteParamController = ((req, res) => 
 {
     const { id } = req.params;
 
-    res.status(200).send('Remove an Order with ProductId ' + id );
+    Order.deleteOne({ _id: id })
+        .then(() => 
+        {
+            res.status(200).json({
+                success:true,
+                message: `Deleted the order id: ${ id }`
+            });
+        })
+        .catch((err) => 
+        {
+            res.status(400).json({
+                success:false,
+                message:err.message
+            });
+        });
 });
 
 module.exports = { 
-    getParamController, postParamController, postController, getController, deleteParamController 
+    getParamController, putParamController, postController, getController, deleteParamController 
 };
