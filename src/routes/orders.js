@@ -3,7 +3,7 @@ const express=require('express');
 const router =express.Router();
 
 const  { 
-    getParamController, postParamController, postController, getController, deleteParamController 
+    getParamController, putParamController, postController, getController, deleteParamController 
 } =require('../controller/orderController');
 
 router.route('/')
@@ -12,7 +12,7 @@ router.route('/')
 
 router.route('/:id')
     .get(getParamController)
-    .put(postParamController)
+    .put(putParamController)
     .delete(deleteParamController);
 
 module.exports=router;

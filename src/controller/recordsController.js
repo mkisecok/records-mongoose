@@ -15,14 +15,14 @@ const getController= ((req, res) =>
     Record.find({})
         .then((records) =>
         {
-            return res.status(200).json({
+            res.status(200).json({
                 success:true,
                 data: records
             });
         })
         .catch((err) =>
         {
-            return res.status(400).json({
+            res.status(400).json({
                 success:false,
                 message:err.message
             });

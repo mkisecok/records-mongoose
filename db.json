@@ -1,11 +1,32 @@
 {
-  "records": [],
+  "records": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2,
+      "title": "rock",
+      "artist": "mahmut",
+      "year": "1950",
+      "price": "20"
+    }
+  ],
   "users": [],
   "orders": [
     {
       "listId": 1,
       "productId": "asd",
       "quantity": "asdasd"
+    },
+    {
+      "listId": 2,
+      "productId": "789456",
+      "quantity": "10"
+    },
+    {
+      "listId": 3,
+      "productId": "455",
+      "quantity": "4545"
     }
   ]
 }
