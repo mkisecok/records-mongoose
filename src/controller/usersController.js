@@ -26,15 +26,22 @@ const getController = ((req, res) =>
         });
 });
 const postController = ((req, res) => 
-{
+{   
     
+    const { password  } = req.body;
+    console.log('reqbody output', req.body);
     newUser = new User();
 
-    newUser.firstname = chance.first();
+    newUser.firstname = req.body.firstname || chance.first();
     newUser.lastname = chance.last();
     newUser.email = chance.email({ domain: 'example.com' });
-    newUser.password = chance.hash({ length: 8 });
-    
+    newUser.password = newUser.hashPassword(password); 
+    newUser.adress = { 
+        zip: req.body.zip || chance.zip({ plusfour: true }),
+        street:req.body.street || chance.street({ short_suffix: true }),
+        state:req.body.state || chance.state({ full: true }),
+        city:req.body.city || chance.city(),
+    };
     newUser.save()
         .then(user => 
         {
@@ -74,25 +81,43 @@ const getParamController = ((req, res) =>
 
 });
 const putParamController = ((req, res) => 
-{
+{   
+    // console.log('before', req.body);
     const { id } = req.params;
+    const { password } =req.body;
+    console.log( 'afterParams', password);
+    newUser = new User();
 
     User.findOne({ _id: id })
         .then(user => 
-        {
+        {   
+            console.log('before', user.password);
             user.firstname = req.body.firstname || user.firstname;
             user.lastname = req.body.lastname || user.lastname;
             user.email = req.body.email || user.email;
-            user.password = req.body.password || user.password;
-
+            req.body.password && (user.password = newUser.hashPassword(password));
+            console.log('after', user.password);
             user.save()
                 .then(updatedUser => 
-                {
-                    res.status(200).json({
-                        success:true,
-                        newData: req.body,
-                        data: updatedUser
-                    });
+                {   
+                    if(password)
+                    {   
+                        req.body.password=newUser.hashPassword(password);
+                        res.status(200).json({
+                            success:true,
+                            newData: req.body,
+                            data: updatedUser
+                        });   
+                    }
+                    else
+                    {
+                        res.status(200).json({
+                            success:true,
+                            newData: req.body,
+                            data: updatedUser
+                        });
+                    }
+                    
                 })
                 .catch(err => 
                 {
