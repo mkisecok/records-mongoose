@@ -41,7 +41,7 @@ app.use('*', (req, res, next ) =>
 
 app.use((error, req, res, next) =>
 {
-    console.log('Created error handler ', error );
+    console.log('Created error handler ', error.message, '\n'+ 'statusCode: ', error.statusCode );
     res.status(error.statusCode);
     res.send({ 
         error: 
