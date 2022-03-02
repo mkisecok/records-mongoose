@@ -7,8 +7,8 @@ const { Schema, model } =require('mongoose');
 const userAdress =require('./UserAdress');
 
 const userSchema = new Schema({
-    firstname: String,
-    lastname: String,
+    firstName: String,
+    lastName: String,
     email: String,
     password: { type: String },
     adress:userAdress
