@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser=require('body-parser');
 const mongoose =require('mongoose');
 const { middlewareSecurity }=require('./middlewares/middlewareSecurity');
+
 const morgan = require('morgan');
 
 // import routes
@@ -28,7 +29,7 @@ app.use(morgan('tiny'));
 
 //  routers
 app.use('/records', records);
-app.use('/users', users);
+app.use('/users',  users);
 app.use('/orders', orders);
 
 // Error middleware
