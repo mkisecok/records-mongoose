@@ -14,7 +14,7 @@ const { middleWareUsers }  = require('../middlewares/middleWareUsers');
 
 router.route('/')
     .get(getController)
-    .post(middleWareUsers.email, middleWareUsers.password, postController);
+    .post(middleWareUsers.email, middleWareUsers.password, middleWareUsers.confirm, postController);
 
 router.route('/:id')
     .get(getParamController)
