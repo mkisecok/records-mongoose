@@ -1,5 +1,6 @@
 const express =require('express');
-
+const validator = require('express-validator');
+// const { middleWareUsers }= require('../middlewares/middleWareUsers');
 const router=express.Router();
 
 const {
@@ -9,10 +10,11 @@ const {
     putParamController,
     deleteParamController
 } = require('../controller/usersController');
+const { middleWareUsers }  = require('../middlewares/middleWareUsers');
 
 router.route('/')
     .get(getController)
-    .post(postController);
+    .post(middleWareUsers.email, middleWareUsers.password, postController);
 
 router.route('/:id')
     .get(getParamController)
