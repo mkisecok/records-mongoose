@@ -2,6 +2,9 @@
 // model
 const User =require('../models/User');
 
+// validator
+const validator = require('express-validator');
+
 // chance
 const Chance = require('chance');
 const chance = new Chance();
@@ -25,40 +28,55 @@ const getController = ((req, res) =>
             });
         });
 });
-const postController = ((req, res) => 
-{   
+const postController = (  
+    (req, res) => 
+    {   
     
-    const { password  } = req.body;
-    console.log('reqbody output', req.body);
-    newUser = new User();
+        const { 
+            password, email, firstName, lastName  
+        } = req.body;
+        console.log('reqbody output', req.body);
 
-    newUser.firstname = req.body.firstname || chance.first();
-    newUser.lastname = chance.last();
-    newUser.email = chance.email({ domain: 'example.com' });
-    newUser.password = newUser.hashPassword(password); 
-    newUser.adress = { 
-        zip: req.body.zip || chance.zip({ plusfour: true }),
-        street:req.body.street || chance.street({ short_suffix: true }),
-        state:req.body.state || chance.state({ full: true }),
-        city:req.body.city || chance.city(),
-    };
-    newUser.save()
-        .then(user => 
+        // create error for validation
+        const error = validator.validationResult(req).errors;
+        console.log(error);
+        if(error.length > 0 )
         {
-            res.status(200).json({
-                success:true,
-                data:user
+            return res.status(400).json({
+                success:false,
+                message:error
             });
-        })
-        .catch((err) => 
-        {
-            res.status(400).json({
-                success: false,
-                message: err.message
+        }
+
+        newUser = new User();
+
+        newUser.firstName = firstName || chance.first();
+        newUser.lastName = lastName || chance.last();
+        newUser.email = email || chance.email({ domain: 'example.com' });
+        newUser.password = newUser.hashPassword(password); 
+        newUser.adress = { 
+            zip: req.body.zip || chance.zip({ plusfour: true }),
+            street:req.body.street || chance.street({ short_suffix: true }),
+            state:req.body.state || chance.state({ full: true }),
+            city:req.body.city || chance.city(),
+        };
+        newUser.save()
+            .then(user => 
+            {
+                res.status(200).json({
+                    success:true,
+                    data:user
+                });
+            })
+            .catch((err) => 
+            {
+                res.status(400).json({
+                    success: false,
+                    message: err.message
+                });
             });
-        });
     
-});
+    });
 const getParamController = ((req, res) => 
 {
     const { id } =req.params;
