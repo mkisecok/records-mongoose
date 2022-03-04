@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <h1 style="text-align: center;">Order</h1>
+    <div style="text-align:center;">
+        <input type="text" id="product-id" placeholder="product-id" name="product-id" style="margin-bottom:10px ;">
+        <br>
+        <input type="text" id="quantity" placeholder="quantity" name="quantity">
+        <br>
+        <button style="margin: 10px" id="send-btn">Send Order</button>
+        <p id="error-msg" style='color:red'></p>
+    </div>
+    
+    <script>
+        const productIdInput=document.querySelector('#product-id');
+        const quantityInput=document.querySelector('#quantity');
+        const sendButton=document.querySelector('#send-btn');
+        const errorMsg=document.querySelector('#error-msg');
+
+        sendButton.addEventListener('click', () =>
+        { 
+            
+            const productId=productIdInput.value;
+            const quantity= quantityInput.value;
+            
+    if(productIdInput.value !== '' && quantityInput.value !=='' )
+{
+            axios.post('/orders', {
+                productId,
+                quantity
+            }).then(res =>
+            {
+                if( res.data.success==true )
+                {
+                    errorMsg.innerText='';
+                    productIdInput.value='';
+                    quantityInput.value='';
+                    console.log(res.data)
+                }
+                else if(res.data.message)
+                {
+                    errorMsg.innerText=res.data.message
+                }
+            })}
+            else{
+                errorMsg.innerText='You must define a quantity and productId'
+            }
+        })
+    </script>
+
+</body>
+</html>
